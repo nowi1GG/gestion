@@ -41,6 +41,18 @@ class ArchivosModel extends Query{
         $sql= "SELECT id FROM detalle_archivos WHERE correo = '$correo' AND id_archivo = $id_archivo";
         return $this->select($sql);
     }
+
+    public function getArchivosCarpeta($id_carpeta)
+    {
+        $sql= "SELECT * FROM archivos WHERE id_carpeta = $id_carpeta";
+        return $this->selectAll($sql);
+    }
+
+    public function getArchivosCompartidos($id_carpeta)
+    {
+        $sql= "SELECT d.id, d.correo, a.nombre FROM detalle_archivos d INNER JOIN archivos a ON d.id_archivo = a.id INNER JOIN carpetas c ON a.id_carpeta = c.id WHERE a.id_carpeta = $id_carpeta";
+        return $this->selectAll($sql);
+    }
 }
 
 ?>
