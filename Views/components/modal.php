@@ -79,9 +79,7 @@
                 <div class="modal-body">
                     <select class="js-states form-control" id="usuarios" name="usuarios[]" tabindex="-1" multiple="multiple" style="display: none; width: 100%">
                     </select>
-
                     <hr>
-
                     <div class="accordion accordion-flush mb-3" id="accordionFlushExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingOne">
@@ -92,7 +90,7 @@
                             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
                                     <div id="container-archivos">
-                                        <input type="hidden" id="id_archivo" name="archivos[]">
+                                        
                                     </div>
                                 </div>
                             </div>

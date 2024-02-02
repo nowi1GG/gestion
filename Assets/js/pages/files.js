@@ -24,13 +24,13 @@ const btnVer = document.querySelector("#btnVer");
 const compartir = document.querySelectorAll('.compartir');
 const modalUsuarios = document.querySelector("#modalUsuarios");
 const myModalUser = new bootstrap.Modal(modalUsuarios);
-const id_archivo = document.querySelector("#id_archivo");
 const frmCompartir = document.querySelector("#frmCompartir");
 const usuarios = document.querySelector("#usuarios");
 
 const btnCompartir = document.querySelector('#btnCompartir');
 const container_archivos = document.querySelector('#container-archivos');
 const btnVerDetalle = document.querySelector('#btnVerDetalle');
+const content_acordeon = document.querySelector('#accordionFlushExample');
 
 document.addEventListener('DOMContentLoaded', function () {
     btnUpload.addEventListener('click', function () {
@@ -160,7 +160,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     const res = JSON.parse(this.responseText);
                     alertaPersonalizada(res.tipo, res.mensaje);
                     if (res.tipo == 'success') {
-                    id_archivo.value = '';
                     $('.js-states').val(null).trigger('change');
                     myModalUser.hide();
                     }
@@ -183,8 +182,21 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 function compartirArchivo(id) {
-    id_archivo.value = id;
-    myModalUser.show();
+    const http = new XMLHttpRequest();
+    const url = base_url + 'archivos/buscarCarpeta/' + id;
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);   
+            console.log(this.responseText);
+            id_carpeta.value = res.id_carpeta;
+            content_acordeon.classList.add('d-none');
+            container_archivos.innerHTML = `<input type="hidden"  value= "${res.id}" 
+            name="archivos[]">`;
+            myModalUser.show();
+        }
+    };
 }
 
 function verArchivos() {
@@ -197,6 +209,7 @@ function verArchivos() {
             const res = JSON.parse(this.responseText);
             let html = '';
             if (res.length > 0) {
+                content_acordeon.classList.remove('d-none');
                 res.forEach(archivo => {
                     html += `<div class="form-check">
                         <input class="form-check-input" type="checkbox" value="${archivo.id}" name="archivos[]"
