@@ -73,13 +73,17 @@ class Archivos extends Controller
         die();
     }
 
-     public function verDetalle($id_carpeta)
+    //ELIMINAR ARCHIVO COMPARTIDO
+    public function eliminarCompartido($id)
     {
-        $data = $this->model->getArchivosCompartidos($id_carpeta);
-        for ($i=0; $i < count($data); $i++) { 
-            $data[$i]['acciones'] = '<button class="btn btn-danger btn-sm">Eliminar</button>';
+        $fecha = date('Y-m-d H:i:s');
+        $data = $this->model->eliminarCompartido($fecha, $id);
+        if ($data == 1) {
+            $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO DADO DE BAJA');
+        } else {
+            $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL ELIMINAR');
         }
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        echo json_encode($res);
         die();
     }
 }

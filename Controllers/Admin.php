@@ -84,4 +84,30 @@ class Admin extends Controller
         $data['archivos'] = $this->model->getArchivos($id_carpeta, $this->id_usuario);
         $this->views->getView('admin', 'archivos', $data);
     }
+
+    public function verdetalle($id_carpeta)
+    {
+        $data['title'] = 'Archivos compartidos';
+        $data['id_carpeta'] = $id_carpeta;
+        $data['script'] = 'details.js';
+        $this->views->getView('admin', 'detalle', $data);
+    }
+
+    public function listardetalle($id_carpeta)
+    {
+        $data = $this->model->getArchivosCompartidos($id_carpeta);
+        for ($i = 0; $i < count($data); $i++) {
+            if ($data[$i]['estado'] == 0) {
+                $data[$i]['estado'] = '<span class="badge bg-warning">Se elimina '. $data[$i]
+                ['elimina'].'</span>';
+            } else {
+                $data[$i]['estado'] = '<span class="badge bg-success">Compartido</span>';
+            }
+            
+            $data[$i]['acciones'] = '<button class="btn btn-danger btn-sm" onclick="eliminarDetalle('.
+            $data[$i]['id'] . ')">Eliminar</button>';
+        }
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
 }

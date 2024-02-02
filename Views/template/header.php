@@ -27,6 +27,7 @@
     <link href="<?php echo BASE_URL . 'Assets/plugins/DataTables/datatables.min.css'; ?>" rel="stylesheet">
     <link href="<?php echo BASE_URL . 'Assets/css/custom.css'; ?>" rel="stylesheet">
     <link href="<?php echo BASE_URL . 'Assets/css/select2.min.css'; ?>" rel="stylesheet">
+    <link href="<?php echo BASE_URL . 'Assets/css/select2-bootstrap-5-theme.rtl.min.css'; ?>" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo BASE_URL .  'Assets/images/favicon.ico'; ?>">
 
@@ -67,7 +68,7 @@
                         <a href="<?php echo BASE_URL . 'compartidos' ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end">87</span></a>
                     </li>
                     <li>
-                        <a href="<?php echo BASE_URL . 'admin' ?>"><i class="material-icons-two-tone">cloud_queue</i>File Manager</a>
+                        <a href="<?php echo BASE_URL . 'admin' ?>"><i class="material-icons-two-tone">cloud_queue</i>Gestor de archivos</a>
                     </li>
                 </ul>
             </div>

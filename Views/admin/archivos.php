@@ -11,7 +11,7 @@
                             <h1>Administrador de Archivos</h1>
                         </div>
                         <div class="page-description-actions">
-                            <a href="#" class="btn btn-primary" id="btnUpload"><i class="material-icons">add</i>Upload File</a>
+                            <a href="#" class="btn btn-primary" id="btnUpload"><i class="material-icons">add</i>Subir archivo</a>
                         </div>
                     </div>
                 </div>
