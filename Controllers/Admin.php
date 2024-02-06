@@ -13,6 +13,7 @@ class Admin extends Controller
         $data['title'] = 'Panel de administracion';
         $data['script'] = 'files.js';
         $data['active'] = 'recent';
+        $data['menu'] = 'admin';
         $carpetas = $this->model->getCarpetas($this->id_usuario);
         $data['archivos'] = $this->model->getArchivosRecientes($this->id_usuario);
         for ($i = 0; $i < count($carpetas); $i++) {
@@ -82,6 +83,7 @@ class Admin extends Controller
         $data['title'] = 'Listado de archivos';
         $data['active'] = 'detail';
         $data['archivos'] = $this->model->getArchivos($id_carpeta, $this->id_usuario);
+        $data['menu'] = 'admin';
         $this->views->getView('admin', 'archivos', $data);
     }
 
@@ -90,6 +92,12 @@ class Admin extends Controller
         $data['title'] = 'Archivos compartidos';
         $data['id_carpeta'] = $id_carpeta;
         $data['script'] = 'details.js';
+        $data['carpeta'] = $this->model->getCarpeta($id_carpeta);
+        if (empty($data['carpeta'])) {
+            echo 'PAGINA NO ENCONTRADA';
+            exit;
+        }
+        $data['menu'] = 'admin';
         $this->views->getView('admin', 'detalle', $data);
     }
 

@@ -32,8 +32,13 @@ function eliminarRegistro(title, text, accion, url, table) {
                     const res = JSON.parse(this.responseText);
                     alertaPersonalizada(res.tipo, res.mensaje);
                     if (res.tipo == 'success') {
-                        table.ajax.reload();
-                        
+                        if (table != null) {
+                            table.ajax.reload();
+                        }else{
+                           setTimeout(() => {
+                              window.location.reload(); 
+                           }, 1500);
+                        } 
                     }
 
                 }

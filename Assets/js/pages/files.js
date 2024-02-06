@@ -32,6 +32,9 @@ const container_archivos = document.querySelector('#container-archivos');
 const btnVerDetalle = document.querySelector('#btnVerDetalle');
 const content_acordeon = document.querySelector('#accordionFlushExample');
 
+/// ELIMINAR ARCHIVOS RECIENTES
+const eliminar = document.querySelectorAll('.eliminar');
+
 document.addEventListener('DOMContentLoaded', function () {
     btnUpload.addEventListener('click', function () {
         myModal.show();
@@ -160,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     const res = JSON.parse(this.responseText);
                     alertaPersonalizada(res.tipo, res.mensaje);
                     if (res.tipo == 'success') {
-                    $('.js-states').val(null).trigger('change');
-                    myModalUser.hide();
+                        $('.js-states').val(null).trigger('change');
+                        myModalUser.hide();
                     }
                 }
             };
@@ -179,6 +182,15 @@ document.addEventListener('DOMContentLoaded', function () {
     btnVerDetalle.addEventListener('click', function () {
         window.location = base_url + 'admin/verdetalle/' + id_carpeta.value;
     })
+
+    //ELIMINAR ARCHIVO RECIENTE
+    eliminar.forEach(enlace => {
+        enlace.addEventListener('click', function (e) {
+            let id = e.target.getAttribute('data-id');
+            const url = base_url + 'archivos/eliminar/' + id;
+            eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL ARCHIVO SE ELIMINARA DE FORMA PERMANENTE EN 30 DIAS', 'SI ELIMINAR', url, null)
+        })
+    });
 })
 
 function compartirArchivo(id) {
@@ -188,7 +200,7 @@ function compartirArchivo(id) {
     http.send();
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            const res = JSON.parse(this.responseText);   
+            const res = JSON.parse(this.responseText);
             console.log(this.responseText);
             id_carpeta.value = res.id_carpeta;
             content_acordeon.classList.add('d-none');
