@@ -16,6 +16,7 @@
                     </div>
                 </div>
             </div>
+            <div id="container_progress" class= "mb-3"></div>
             <div class="row">
                 <?php foreach ($data['carpetas'] as $key => $carpeta) { ?>
                     <div class="col-md-4">
@@ -48,7 +49,7 @@
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="file-manager-recent-<?php echo $archivo['id'];?>">
                                         <li><a class="dropdown-item compartir" href="#" id="<?php echo $archivo['id'];?>">Compartir</a></li>
                                         <li><a class="dropdown-item" href="<?php echo BASE_URL . 'Assets/archivos/' . $archivo['id_carpeta'] . '/' . $archivo['nombre']; ?>" 
-                                        download="<?php echo BASE_URL . 'Assets/archivos/' . $archivo['id_carpeta'] . '/' . $archivo['nombre']; ?>">Descargar</a></li>
+                                        download="<?php echo $archivo['nombre'];?>">Descargar</a></li>
                                         <li><a class="dropdown-item eliminar" href="#" data-id="<?php echo $archivo['id']; ?>">Eliminar</a></li>
                                     </ul>
                                 </div>

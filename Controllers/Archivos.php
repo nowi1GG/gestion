@@ -1,12 +1,13 @@
 <?php
 class Archivos extends Controller
 {
-    private $id_usuario;
+    private $id_usuario, $correo;
     public function __construct()
     {
         parent::__construct();
         session_start();
         $this->id_usuario = $_SESSION['id'];
+        $this->correo = $_SESSION['correo'];
     }
     public function index()
     {
@@ -22,6 +23,7 @@ class Archivos extends Controller
         }
         $data['carpetas'] = $carpetas;
         $data['menu'] = '';
+        $data ['shares']= $this->model->verificarEstado($this->correo);
         $this->views->getView('archivos', 'index', $data);
     }
 
@@ -29,7 +31,7 @@ class Archivos extends Controller
     public function getUsuarios()
     {
         $valor = $_GET['q'];
-        $data = $this->model->getUsuarios($valor);
+        $data = $this->model->getUsuarios($valor, $this->id_usuario);
         for ($i = 0; $i < count($data); $i++) {
             $data[$i]['text'] = $data[$i]['correo'];
         }
@@ -104,6 +106,13 @@ class Archivos extends Controller
             $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL ELIMINAR');
         }
         echo json_encode($res);
+        die();
+    }
+
+    public function busqueda($valor)
+    {
+        $data = $this->model->getBusqueda($valor, $this->id_usuario);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
 }

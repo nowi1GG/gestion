@@ -70,7 +70,7 @@
                     'active-page' : ''; ?>" >
                         <a href="<?php echo BASE_URL . 'compartidos' ?>"
                         class="<?php echo ($data['menu'] == 'share') ? 
-                        'active' : ''; ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end">87</span></a>
+                        'active' : ''; ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end"><?php echo $data ['shares'] ['total'];?></span></a>
                     </li>
                     <li class="<?php echo ($data['menu'] == 'admin') ? 
                     'active-page' : ''; ?> ">
@@ -83,7 +83,8 @@
         <div class="app-container">
             <div class="search">
                 <form>
-                    <input class="form-control" type="text" placeholder="Type here..." aria-label="Search">
+                    <input class="form-control" id="inputBusqueda" type="text" placeholder="Buscar..." aria-label="Search">
+                    <div id="container-result"></div>
                 </form>
                 <a href="#" class="toggle-search"><i class="material-icons">close</i></a>
             </div>

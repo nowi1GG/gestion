@@ -1,12 +1,13 @@
 <?php
 class Admin extends Controller
 {
-    private $id_usuario;
+    private $id_usuario, $correo;
     public function __construct()
     {
         parent::__construct();
         session_start();
         $this->id_usuario = $_SESSION['id'];
+        $this->correo = $_SESSION['correo'];
     }
     public function index()
     {
@@ -21,6 +22,7 @@ class Admin extends Controller
             $carpetas[$i]['fecha'] = time_ago(strtotime($carpetas[$i]['fecha_create']));
         }
         $data['carpetas'] = $carpetas;
+        $data ['shares']= $this->model->verificarEstado($this->correo);
         $this->views->getView('admin', 'home', $data);
     }
     public function crearcarpeta()
@@ -54,7 +56,7 @@ class Admin extends Controller
         $name = $archivo['name'];
         $tmp = $archivo['tmp_name'];
         $tipo = $archivo['type'];
-        $data = $this->model->subirArchivo($name, $tipo, $id_carpeta);
+        $data = $this->model->subirArchivo($name, $tipo, $id_carpeta, $this->id_usuario);
         // $data['archivos'] = $this->model->getArchivos($this->id_usuario);
         // for ($i = 0; $i < count($data['archivos']); $i++) {
         //     $data['archivos'][$i]['fecha'] = $this->time_ago(strtotime($data['archivos'][$i]['fecha_create']));
@@ -84,6 +86,7 @@ class Admin extends Controller
         $data['active'] = 'detail';
         $data['archivos'] = $this->model->getArchivos($id_carpeta, $this->id_usuario);
         $data['menu'] = 'admin';
+        $data ['shares']= $this->model->verificarEstado($this->correo);
         $this->views->getView('admin', 'archivos', $data);
     }
 
@@ -98,6 +101,7 @@ class Admin extends Controller
             exit;
         }
         $data['menu'] = 'admin';
+        $data ['shares']= $this->model->verificarEstado($this->correo);
         $this->views->getView('admin', 'detalle', $data);
     }
 

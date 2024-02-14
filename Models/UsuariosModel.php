@@ -48,7 +48,12 @@ class UsuariosModel extends Query{
         return $this->save($sql, $datos);
     } 
 
-  
+    ### VER TOTAL ARCHIVOS COMPARTIDOS
+    public function verificarEstado($correo)
+    {
+        $sql= "SELECT COUNT(id) AS total FROM detalle_archivos WHERE correo = '$correo' AND estado = 1";
+        return $this->select($sql);
+    }
 }
 
 ?>

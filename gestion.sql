@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 06, 2024 at 01:15 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 14-02-2024 a las 08:13:16
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gestion`
+-- Base de datos: `gestion`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `archivos`
+-- Estructura de tabla para la tabla `archivos`
 --
 
 CREATE TABLE `archivos` (
@@ -34,24 +34,14 @@ CREATE TABLE `archivos` (
   `fecha_create` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `estado` int(11) NOT NULL DEFAULT 1,
   `elimina` datetime DEFAULT NULL,
-  `id_carpeta` int(11) NOT NULL
+  `id_carpeta` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `archivos`
---
-
-INSERT INTO `archivos` (`id`, `nombre`, `tipo`, `fecha_create`, `estado`, `elimina`, `id_carpeta`) VALUES
-(1, 'alejandro.zip', 'application/x-zip-compressed', '2024-02-06 00:02:44', 0, '2024-03-05 20:02:44', 1),
-(2, '20230925_232414.jpg', 'image/jpeg', '2024-02-05 23:32:29', 1, NULL, 1),
-(3, '406505797_716944233678679_9110343288910386105_n.jpg', 'image/jpeg', '2024-02-06 00:02:38', 1, NULL, 1),
-(4, '406505797_716944233678679_9110343288910386105_n.jpg', 'image/jpeg', '2024-02-06 00:04:03', 1, NULL, 2),
-(5, '20230925_232414.jpg', 'image/jpeg', '2024-02-06 00:04:10', 1, NULL, 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `carpetas`
+-- Estructura de tabla para la tabla `carpetas`
 --
 
 CREATE TABLE `carpetas` (
@@ -62,19 +52,10 @@ CREATE TABLE `carpetas` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `carpetas`
---
-
-INSERT INTO `carpetas` (`id`, `nombre`, `fecha_create`, `estado`, `id_usuario`) VALUES
-(1, 'LORD', '2024-02-04 21:49:00', 1, 1),
-(2, 'prueba', '2024-02-05 19:36:56', 1, 1),
-(3, 'prueba2', '2024-02-05 20:20:44', 1, 1);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detalle_archivos`
+-- Estructura de tabla para la tabla `detalle_archivos`
 --
 
 CREATE TABLE `detalle_archivos` (
@@ -87,19 +68,10 @@ CREATE TABLE `detalle_archivos` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `detalle_archivos`
---
-
-INSERT INTO `detalle_archivos` (`id`, `fecha_add`, `correo`, `estado`, `elimina`, `id_archivo`, `id_usuario`) VALUES
-(1, '2024-02-06 00:03:13', 'pagolabrian@gmail.com', 1, NULL, 1, 1),
-(2, '2024-02-06 00:03:13', 'pagolabrian@gmail.com', 1, NULL, 2, 1),
-(3, '2024-02-06 00:03:13', 'pagolabrian@gmail.com', 1, NULL, 3, 1);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -118,7 +90,7 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `usuarios`
+-- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `correo`, `telefono`, `direccion`, `perfil`, `clave`, `token`, `fecha`, `estado`, `rol`) VALUES
@@ -127,25 +99,26 @@ INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `correo`, `telefono`, `direc
 (3, 'bryan', 'pagola', 'pagolabrian@gmail.com', '04147644136', 'san rafael', NULL, '$2y$10$lpdhibX8SFjaz73PHR9cKudEFuQus8/nE.bGkYuh2qT2CGBmbxbM2', NULL, '2024-02-05 20:20:27', 1, 1);
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `archivos`
+-- Indices de la tabla `archivos`
 --
 ALTER TABLE `archivos`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_carpeta` (`id_carpeta`);
+  ADD KEY `id_carpeta` (`id_carpeta`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indexes for table `carpetas`
+-- Indices de la tabla `carpetas`
 --
 ALTER TABLE `carpetas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indexes for table `detalle_archivos`
+-- Indices de la tabla `detalle_archivos`
 --
 ALTER TABLE `detalle_archivos`
   ADD PRIMARY KEY (`id`),
@@ -153,57 +126,58 @@ ALTER TABLE `detalle_archivos`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indexes for table `usuarios`
+-- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `archivos`
+-- AUTO_INCREMENT de la tabla `archivos`
 --
 ALTER TABLE `archivos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `carpetas`
+-- AUTO_INCREMENT de la tabla `carpetas`
 --
 ALTER TABLE `carpetas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `detalle_archivos`
+-- AUTO_INCREMENT de la tabla `detalle_archivos`
 --
 ALTER TABLE `detalle_archivos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `usuarios`
+-- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `archivos`
+-- Filtros para la tabla `archivos`
 --
 ALTER TABLE `archivos`
-  ADD CONSTRAINT `archivos_ibfk_1` FOREIGN KEY (`id_carpeta`) REFERENCES `carpetas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `archivos_ibfk_1` FOREIGN KEY (`id_carpeta`) REFERENCES `carpetas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `archivos_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `carpetas`
+-- Filtros para la tabla `carpetas`
 --
 ALTER TABLE `carpetas`
   ADD CONSTRAINT `carpetas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `detalle_archivos`
+-- Filtros para la tabla `detalle_archivos`
 --
 ALTER TABLE `detalle_archivos`
   ADD CONSTRAINT `detalle_archivos_ibfk_1` FOREIGN KEY (`id_archivo`) REFERENCES `archivos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
