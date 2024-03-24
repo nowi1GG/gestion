@@ -24,6 +24,7 @@
                                     <th>Direccion</th>
                                     <th>Perfil</th>
                                     <th>F. registro</th>
+                                    <th>Rol</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,20 +113,6 @@
                                     </i>
                                 </span>
                                 <input class="form-control" type="password" id="clave" name="clave" placeholder="Contraseña" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="rol">Rol</label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                <i class="material-icons">
-                                        person
-                                    </i>
-                                </span>
-                                <select name="rol" id="rol" class="form-control" required>
-                                    <option value="1">PRESIDENTE(a)</option>
-                                    <option value="2">SECRETARIO(a)</option>
-                                </select>
                             </div>
                         </div>
                     </div>

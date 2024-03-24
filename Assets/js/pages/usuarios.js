@@ -5,6 +5,25 @@ const myModal = new bootstrap.Modal(modalRegistro);
 const title = document.querySelector('#title');
 let tablaUsuarios; // Variable para almacenar la instancia de DataTable
 
+// document.addEventListener('DOMContentLoaded', function () {
+//     const formulario = document.getElementById('formulario');
+    
+//     formulario.addEventListener('submit', function (event) {
+//         event.preventDefault(); // Evita que el formulario se envíe de forma convencional
+        
+//         // Obtener el valor seleccionado del select
+//         const selectRol = document.getElementById('rol');
+//         const rolSeleccionado = selectRol.value;
+        
+//         // Aquí puedes hacer lo que quieras con el valor seleccionado
+//         // Por ejemplo, puedes enviarlo a través de una petición AJAX al servidor
+        
+//         // En este ejemplo, simplemente lo mostraremos en la consola del navegador
+//         console.log("Rol seleccionado:", rolSeleccionado);
+//     });
+// });
+
+
 document.addEventListener('DOMContentLoaded', function () {
     //CARGAR DATOS CON DATATABLE
     tablaUsuarios = $('#tblUsuarios').DataTable({
@@ -286,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (frm.nombre.value == '' || frm.apellido.value == ''
             || frm.correo.value == '' || frm.telefono.value == ''
             || frm.direccion.value == '' || frm.clave.value == ''
-            || frm.rol.value == '') {
+            ) {
             alertaPersonalizada('warning', 'TODOS LOS CAMPOS SON REQUERIDOS');
         } else {
             const data = new FormData(frm);

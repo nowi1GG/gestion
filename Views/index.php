@@ -59,12 +59,33 @@
 
                 <div class="auth-submit">
                     <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-                    <a href="#" class="auth-forgot-password float-end">¿Has olvidado tu contraseña?</a>
+                    <a href="#" class="auth-forgot-password float-end" id="reset">¿Has olvidado tu contraseña?</a>
                 </div>
             </form>
         </div>
     </div>
 
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Olvidaste tu contraseña</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputReset">Correo</label>
+                        <input id="inputReset" class="form-control" type="text" name="inputReset" placeholder="Correo electronico">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" id="btnProcesar" >Procesar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
     <!-- Javascripts -->
     <script src="<?php echo BASE_URL . 'Assets/plugins/jquery/jquery-3.5.1.min.js'; ?>"></script>
     <script src="<?php echo BASE_URL . 'Assets/plugins/bootstrap/js/bootstrap.min.js'; ?>"></script>
@@ -72,9 +93,9 @@
     <script src="<?php echo BASE_URL . 'Assets/plugins/pace/pace.min.js'; ?>"></script>
     <script src="<?php echo BASE_URL . 'Assets/js/main.min.js'; ?>"></script>
     <script src="<?php echo BASE_URL . 'Assets/js/sweetalert2@11.js'; ?>"></script>
-    <script src="<?php echo BASE_URL . 'Assets/js/custom.js'; ?>"></script>
+    <script src="<?php echo BASE_URL . 'Assets/js/alertas.js'; ?>"></script>
     <script>
-        const base_url = '<?php echo BASE_URL;?>';
+        const base_url = '<?php echo BASE_URL; ?>';
     </script>
     <script src="<?php echo BASE_URL . 'Assets/js/pages/login.js'; ?>"></script>
 </body>

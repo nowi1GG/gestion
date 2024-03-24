@@ -8,13 +8,18 @@ class Usuarios extends Controller
         session_start();
         $this->id_usuario = $_SESSION['id'];
         $this->correo = $_SESSION['correo'];
+        ##validar sesion
+        if (empty( $_SESSION['id'])) {
+            header('Location: ' .BASE_URL);
+            exit;
+        }
     }
     public function index()
     {
         $data['title'] = 'Gestion de usuarios';
         $data['script'] = 'usuarios.js';
         $data['menu'] = 'usuarios';
-        $data ['shares']= $this->model->verificarEstado($this->correo);
+        $data['shares'] = $this->model->verificarEstado($this->correo);
         $this->views->getView('usuarios', 'index', $data);
     }
 
@@ -50,9 +55,14 @@ class Usuarios extends Controller
         $telefono = $_POST['telefono'];
         $direccion = $_POST['direccion'];
         $clave = $_POST['clave'];
-        $rol = $_POST['rol'];
+        // $rol = $_POST['rol'];
         $id_usuario = $_POST['id_usuario'];
-        if (empty($nombre) || empty($apellido) || empty($correo) || empty($telefono) || empty($direccion) || empty($clave) || empty($rol)) {
+
+        // if ($id_usuario > 1) {
+        //     $rol = 'usuario';
+        // }
+        
+        if (empty($nombre) || empty($apellido) || empty($correo) || empty($telefono) || empty($direccion) || empty($clave)) {
             $res = array('tipo' => 'warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS');
         } else {
             if ($id_usuario == '') {
@@ -63,7 +73,7 @@ class Usuarios extends Controller
                     $verificaTel = $this->model->getVerificar('telefono', $telefono, 0);
                     if (empty($verificaTel)) {
                         $hash = password_hash($clave, PASSWORD_DEFAULT);
-                        $data = $this->model->registrar($nombre, $apellido, $correo, $telefono, $direccion, $hash, $rol);
+                        $data = $this->model->registrar($nombre, $apellido, $correo, $telefono, $direccion, $hash);
                         if ($data > 0) {
                             $res = array('tipo' => 'success', 'mensaje' => 'USUARIO REGISTRADO');
                         } else {
@@ -83,7 +93,7 @@ class Usuarios extends Controller
                     $verificaTel = $this->model->getVerificar('telefono', $telefono, $id_usuario);
                     if (empty($verificaTel)) {
                         $hash = password_hash($clave, PASSWORD_DEFAULT);
-                        $data = $this->model->modificar($nombre, $apellido, $correo, $telefono, $direccion, $rol, $id_usuario);
+                        $data = $this->model->modificar($nombre, $apellido, $correo, $telefono, $direccion, $id_usuario);
                         if ($data == 1) {
                             $res = array('tipo' => 'success', 'mensaje' => 'USUARIO MODIFICADO');
                         } else {
@@ -120,5 +130,72 @@ class Usuarios extends Controller
         $data = $this->model->getusuario($id);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
+    }
+
+    public function profile()
+    {
+        $data['title'] = 'Perfil del usuario';
+        $data['script'] = 'profile.js';
+        $data['menu'] = 'usuarios';
+        $data['usuario'] = $this->model->getusuario($this->id_usuario);
+        $data['shares'] = $this->model->verificarEstado($this->correo);
+        $this->views->getView('usuarios', 'perfil', $data);
+    }
+
+    public function cambiarPass()
+    {
+        $actual = $_POST['clave_actual'];
+        $nueva = $_POST['clave_nueva'];
+        $confirmar = $_POST['clave_confirmar'];
+        if (empty($actual) || empty($nueva) || empty($confirmar)) {
+            $res = array('tipo' => 'warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS');
+        } else {
+            if ($nueva != $confirmar) {
+                $res = array('tipo' => 'warning', 'mensaje' => 'LAS CONTRASEÑAS NO COINCIDEN');
+            } else {
+                $consulta = $this->model->getUsuario($this->id_usuario);
+                if (password_verify($actual, $consulta['clave'])) {
+                    $hash = password_hash($nueva, PASSWORD_DEFAULT);
+                    $data = $this->model->cambiarPass($hash, $this->id_usuario);
+                    if ($data == 1) {
+                        $res = array('tipo' => 'success', 'mensaje' => 'CONTRASEÑA MODIFICADA  ');
+                    } else {
+                        $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL MODIFICAR');
+                    }
+                } else {
+                    $res = array('tipo' => 'warning', 'mensaje' => 'CONTRASEÑA ACTUAL INCORRECTA');
+                }
+                echo json_encode($res, JSON_UNESCAPED_UNICODE);
+                die();
+            }
+        }
+    }
+
+    public function salir()
+    {
+        session_destroy();
+        header('Location:' . BASE_URL);
+    }
+
+    public function cambiarProfile()
+    {
+        $correo = $_POST['correo'];
+        $nombre = $_POST['nombre'];
+        $apellido = $_POST['apellido'];
+        $telefono = $_POST['telefono'];
+        $direccion = $_POST['direccion'];
+        if (empty($correo) || empty($nombre) || empty($apellido) || empty($telefono) || empty($direccion)) {
+            $res = array('tipo' => 'warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS');
+        } else {
+            $usuario = $this->model->getusuario($this->id_usuario);
+            $data = $this->model->modificar($nombre, $apellido, $correo, $telefono, $direccion, $usuario['rol'], $this->id_usuario);
+            if ($data == 1) {
+                $res = array('tipo' => 'success', 'mensaje' => 'DATOS MODIFICADOS');
+            } else {
+                $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL MODIFICAR');
+            }
+            echo json_encode($res, JSON_UNESCAPED_UNICODE);
+            die();
+        }
     }
 }

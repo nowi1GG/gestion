@@ -38,7 +38,6 @@ function eliminarRegistro(title, text, accion, url, table) {
             http.open("GET", url, true);
             http.send();
             http.onreadystatechange = function () {
-
                 if (this.readyState == 4 && this.status == 200) {
                     const res = JSON.parse(this.responseText);
                     alertaPersonalizada(res.tipo, res.mensaje);
@@ -66,18 +65,17 @@ function buscarArchivos(valor) {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             const res = JSON.parse(this.responseText);
-            let html = '';
+            let html = `<div class="card">
+            <div class="card-body">`;
             if (res.length > 0) {
                 res.forEach(archivo => {
-                    html += `<div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                        <a href=${ base_url + 'Assets/archivos/' + archivo.id_carpeta + '/' + archivo.nombre}" 
+                    html += `<h5 class="card-title">
+                        <a href=${base_url + 'Assets/archivos/' + archivo.id_carpeta + '/' + archivo.nombre}" 
                         download="${archivo.nombre}"}">${archivo.nombre}</a>
-                        </h5>
-                    </div>
-                </div>`;
+                        </h5><hr>`;
                 });
+                html += `</div>
+                </div>`;
             } else {
                 html = `<div class="alert alert-custom alert-indicator-top indicator-danger" role="alert">
                 <div class="alert-content">
@@ -86,7 +84,7 @@ function buscarArchivos(valor) {
                 </div>
             </div>`;
             }
-           
+
             container_result.innerHTML = html;
         }
     };

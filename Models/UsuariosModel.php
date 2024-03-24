@@ -21,10 +21,10 @@ class UsuariosModel extends Query{
         return $this->select($sql);
     }
 
-    public function registrar($nombre, $apellido, $correo, $telefono, $direccion, $clave, $rol)
+    public function registrar($nombre, $apellido, $correo, $telefono, $direccion, $clave)
     {
-        $sql = "INSERT INTO usuarios (nombre, apellido, correo, telefono, direccion, clave, rol) VALUES (?,?,?,?,?,?,?)";
-        $datos = array($nombre, $apellido, $correo, $telefono, $direccion, $clave, $rol);
+        $sql = "INSERT INTO usuarios (nombre, apellido, correo, telefono, direccion, clave) VALUES (?,?,?,?,?,?)";
+        $datos = array($nombre, $apellido, $correo, $telefono, $direccion, $clave);
         return $this->insertar($sql, $datos);
     } 
     
@@ -37,7 +37,7 @@ class UsuariosModel extends Query{
 
    public function getUsuario($id)
    {
-        $sql = "SELECT id, nombre, apellido, correo, telefono, direccion, clave, rol, perfil, fecha FROM usuarios WHERE id = $id";
+        $sql = "SELECT id, nombre, apellido, correo, telefono, direccion, clave, selectRol, perfil, fecha FROM usuarios WHERE id = $id";
         return $this->select($sql);
    }
 
@@ -54,6 +54,13 @@ class UsuariosModel extends Query{
         $sql= "SELECT COUNT(id) AS total FROM detalle_archivos WHERE correo = '$correo' AND estado = 1";
         return $this->select($sql);
     }
+
+    public function cambiarPass($clave, $id)
+    {
+        $sql = "UPDATE usuarios SET clave=? WHERE id=?";
+        $datos = array($clave, $id);
+        return $this->save($sql, $datos);
+    } 
 }
 
 ?>

@@ -8,6 +8,26 @@ class Admin extends Controller
         session_start();
         $this->id_usuario = $_SESSION['id'];
         $this->correo = $_SESSION['correo'];
+        ##validar sesion
+        if (empty( $_SESSION['id'])) {
+            header('Location: ' .BASE_URL);
+            exit;
+        }
+        ##eliminar archivos de forma permanente
+        $fecha = date('Y-m-d H:i:s');
+        $eliminar = $this->model->getConsulta();
+        $ruta = 'assets/archivos/';
+        for ($i=0; $i < count($eliminar); $i++) { 
+            if ($eliminar[$i]['elimina'] < $fecha) {
+                $accion = $this->model->eliminarRegistro($eliminar[$i]['id']);
+                if ($accion == 1) {
+                    if (file_exists($ruta . $eliminar[$i]['id_carpeta'] . '/' . $eliminar[$i]['nombre'])) {
+                        unlink($ruta . $eliminar[$i]['id_carpeta'] . '/' . $eliminar[$i]['nombre']);
+                    }
+                }
+                
+            }
+        }
     }
     public function index()
     {

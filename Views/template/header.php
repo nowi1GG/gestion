@@ -57,25 +57,24 @@
                     <li class="sidebar-title">
                         Apps
                     </li>
-                    <li class="<?php echo ($data['menu'] == 'usuarios') ? 
-                    'active-page' : ''; ?>">
-                        <a href="<?php echo BASE_URL . 'usuarios' ?>" class="<?php echo ($data['menu'] == 'usuarios') ? 
-                    'active' : ''; ?>">
+                    <li class="<?php echo ($data['menu'] == 'usuarios') ?
+                                    'active-page' : ''; ?>">
+                        <a href="<?php echo BASE_URL . 'usuarios' ?>" class="<?php echo ($data['menu'] == 'usuarios') ?
+                                                                                    'active' : ''; ?>">
                             <i class="material-icons">
                                 people_alt
                             </i>Usuarios
                         </a>
                     </li>
-                    <li class="<?php echo ($data['menu'] == 'share') ? 
-                    'active-page' : ''; ?>" >
-                        <a href="<?php echo BASE_URL . 'compartidos' ?>"
-                        class="<?php echo ($data['menu'] == 'share') ? 
-                        'active' : ''; ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end"><?php echo $data ['shares'] ['total'];?></span></a>
+                    <li class="<?php echo ($data['menu'] == 'share') ?
+                                    'active-page' : ''; ?>">
+                        <a href="<?php echo BASE_URL . 'compartidos' ?>" class="<?php echo ($data['menu'] == 'share') ?
+                                                                                    'active' : ''; ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end"><?php echo $data['shares']['total']; ?></span></a>
                     </li>
-                    <li class="<?php echo ($data['menu'] == 'admin') ? 
-                    'active-page' : ''; ?> ">
-                        <a href="<?php echo BASE_URL . 'admin' ?>" class="<?php echo ($data['menu'] == 'admin') ? 
-                        'active' : ''; ?>"><i class="material-icons-two-tone">cloud_queue</i>Gestor de archivos</a>
+                    <li class="<?php echo ($data['menu'] == 'admin') ?
+                                    'active-page' : ''; ?> ">
+                        <a href="<?php echo BASE_URL . 'admin' ?>" class="<?php echo ($data['menu'] == 'admin') ?
+                                                                                'active' : ''; ?>"><i class="material-icons-two-tone">cloud_queue</i>Gestor de archivos</a>
                     </li>
                 </ul>
             </div>
@@ -115,36 +114,19 @@
                                     <a class="nav-link toggle-search" href="#"><i class="material-icons">search</i></a>
                                 </li>
                                 <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link nav-notifications-toggle" id="notificationsDropDown" href="#" data-bs-toggle="dropdown">4</a>
-                                    <div class="dropdown-menu dropdown-menu-end notifications-dropdown" aria-labelledby="notificationsDropDown">
-                                        <h6 class="dropdown-header">Perfil</h6>
-                                        <div class="notifications-dropdown-list">
-                                            <a href="#">
-                                                <div class="notifications-dropdown-item">
-                                                    <div class="notifications-dropdown-item-image">
-                                                        <span class="notifications-badge">
-                                                            <img src="<?php echo BASE_URL . 'Assets/images/avatars/avatar.png'; ?>" alt="">
-                                                        </span>
-                                                    </div>
-                                                    <div class="notifications-dropdown-item-text">
-                                                        <p>Perfil</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="<?php echo BASE_URL . 'principal/salir'; ?>">
-                                                <div class="notifications-dropdown-item">
-                                                    <div class="notifications-dropdown-item-image">
-                                                        <span class="notifications-badge">
-                                                            <img src="<?php echo BASE_URL . 'Assets/images/avatars/avatar.png'; ?>" alt="">
-                                                        </span>
-                                                    </div>
-                                                    <div class="notifications-dropdown-item-text">
-                                                        <p>Salir</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown"><img src="<?php echo BASE_URL . 'Assets/images/logo.jpg'; ?>" alt=""></a>
+                                    <ul class="dropdown-menu dropdown-menu-end language-dropdown" aria-labelledby="languageDropDown">
+                                        <li><a class="dropdown-item" href="<?php echo BASE_URL . 'usuarios/profile'; ?>">
+                                         <i class="material-icons">
+                                            account_circle
+                                         </i>Perfil</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="<?php echo BASE_URL . 'usuarios/salir'; ?>">
+                                            <i class="material-icons">
+                                                power_settings_new
+                                            </i>Salir</a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
