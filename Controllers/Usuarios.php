@@ -48,19 +48,13 @@ class Usuarios extends Controller
 
     public function guardar()
     {
-
         $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
         $correo = $_POST['correo'];
         $telefono = $_POST['telefono'];
         $direccion = $_POST['direccion'];
         $clave = $_POST['clave'];
-        // $rol = $_POST['rol'];
         $id_usuario = $_POST['id_usuario'];
-
-        // if ($id_usuario > 1) {
-        //     $rol = 'usuario';
-        // }
         
         if (empty($nombre) || empty($apellido) || empty($correo) || empty($telefono) || empty($direccion) || empty($clave)) {
             $res = array('tipo' => 'warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS');
@@ -73,9 +67,11 @@ class Usuarios extends Controller
                     $verificaTel = $this->model->getVerificar('telefono', $telefono, 0);
                     if (empty($verificaTel)) {
                         $hash = password_hash($clave, PASSWORD_DEFAULT);
-                        $data = $this->model->registrar($nombre, $apellido, $correo, $telefono, $direccion, $hash);
+                        $rol = "user";
+                        $data = $this->model->registrar($nombre, $apellido, $correo, $telefono, $direccion, $hash, $rol);
                         if ($data > 0) {
-                            $res = array('tipo' => 'success', 'mensaje' => 'USUARIO REGISTRADO');
+                            $res = array('tipo' => 'success', 'mensaje' => 'USUARIO REGISTRADO', 'data' => $data);
+                            echo json_encode($res, JSON_UNESCAPED_UNICODE);
                         } else {
                             $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL REGISTRAR');
                         }
@@ -110,7 +106,6 @@ class Usuarios extends Controller
         echo json_encode($res, JSON_UNESCAPED_UNICODE);
         die();
     }
-
     public function delete($id)
     {
         $data = $this->model->delete($id);
